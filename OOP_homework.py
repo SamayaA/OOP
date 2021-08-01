@@ -8,6 +8,15 @@ def average_grade (person) :
             sum_of_grades += grade
     return round(sum_of_grades / count_grades , 2)
 
+def compare_average_grades (first , second):
+    if average_grade(first) > average_grade(second) :
+        print(f'Средняя оценка у {first.name}\t{first.surname} выше')
+    elif average_grade(first) < average_grade(second) :
+        print('Средняя оценка у {second.name}\t{second.surname} выше')
+    else :
+      print ('Средняя оценка одна и та же')
+
+
 class Student:
     def __init__(self, name, surname, gender):
         self.name = name
