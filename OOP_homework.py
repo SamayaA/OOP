@@ -1,11 +1,10 @@
 
 def average_grade (person) :
-    count_grades =0
+    count_grades = 0
     sum_of_grades = 0
     for course_grades in person.grades.values():
         count_grades += len(course_grades)
-        for grade in course_grades :
-            sum_of_grades += grade
+        sum_of_grades += sum(course_grades)
     return round(sum_of_grades / count_grades , 2)
 
 def compare_average_grades (first , second):
@@ -15,6 +14,14 @@ def compare_average_grades (first , second):
         print('Средняя оценка у {second.name}\t{second.surname} выше')
     else :
       print ('Средняя оценка одна и та же')
+
+def average_course_grade (students_list , course):
+    sum_grades = 0
+    count_grades = 0
+    for num in range(0, len(students_list)) :
+        sum_grades += sum(students_list[num].grades[course])
+        count_grades += len(students_list[num].grades[course])
+    return round(sum_grades / count_grades , 2)
 
 
 class Student:
@@ -44,8 +51,6 @@ class Mentor:
         self.name = name
         self.surname = surname
         self.courses_attached = []
-        
-    
 
 class Lecturer (Mentor):
     def __init__(self, name, surname):
@@ -74,19 +79,45 @@ class Reviewer (Mentor):
             return 'Ошибка'
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
+student_1 = Student('Ruoy', 'Eman', 'your_gender')
+student_1.courses_in_progress += ['Python']
+student_2 = Student('Ayu', 'Oham', 'your_gender')
+student_2.courses_in_progress += ['Python']
 
-reviewer_1 = Reviewer('Some', 'Buddy')
+reviewer_1 = Reviewer('Some', 'Reviewer')
 reviewer_1.courses_attached += ['Python']
+reviewer_2 = Reviewer('Another', 'Reviewer')
+reviewer_2.courses_attached += ['Python']
 
-lecturer_1 = Lecturer('Another', 'Buddy')
+lecturer_1 = Lecturer('Some', 'Lecturer')
 lecturer_1.courses_attached += ['Python']
- 
-best_student.rate_lecturer(lecturer_1, 'Python', 10)
-best_student.rate_lecturer(lecturer_1, 'Python', 10)
-best_student.rate_lecturer(lecturer_1, 'Python', 9)
+lecturer_2 = Lecturer('Another', 'Lecturer')
+lecturer_2.courses_attached += ['Python']
 
-reviewer_1.rate_hw(best_student, 'Python', 10)
-reviewer_1.rate_hw(best_student, 'Python', 10)
-reviewer_1.rate_hw(best_student, 'Python', 10)
+student_1.rate_lecturer(lecturer_1, 'Python', 10)
+student_1.rate_lecturer(lecturer_1, 'Python', 10)
+student_1.rate_lecturer(lecturer_1, 'Python', 9)
+student_2.rate_lecturer(lecturer_2, 'Python', 9)
+student_2.rate_lecturer(lecturer_2, 'Python', 8)
+student_2.rate_lecturer(lecturer_2, 'Python', 9)
+
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_1, 'Python', 9)
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_2.rate_hw(student_2, 'Python', 9)
+reviewer_2.rate_hw(student_2, 'Python', 10)
+reviewer_2.rate_hw(student_2, 'Python', 9)
+
+print(student_1)
+print(student_2)
+print(lecturer_1)
+print(lecturer_2)
+print(reviewer_1)
+print(reviewer_2)
+
+course = 'Python'
+students_list = [student_1, student_2]
+lecturer_list = [lecturer_1 , lecturer_2]
+
+print(f'Средняя оценка у студентов за курс {course} равна {average_course_grade(students_list , course)}')
+print(f'Средняя оценка у лекторов за курс {course} равна {average_course_grade(lecturer_list, course)}')
