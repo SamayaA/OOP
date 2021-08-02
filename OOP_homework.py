@@ -7,14 +7,6 @@ def average_grade (person) :
         sum_of_grades += sum(course_grades)
     return round(sum_of_grades / count_grades , 2)
 
-def compare_average_grades (first , second):
-    if average_grade(first) > average_grade(second) :
-        print(f'Средняя оценка у {first.name}\t{first.surname} выше')
-    elif average_grade(first) < average_grade(second) :
-        print('Средняя оценка у {second.name}\t{second.surname} выше')
-    else :
-      print ('Средняя оценка одна и та же')
-
 def average_course_grade (students_list , course):
     sum_grades = 0
     count_grades = 0
@@ -22,7 +14,6 @@ def average_course_grade (students_list , course):
         sum_grades += sum(students_list[num].grades[course])
         count_grades += len(students_list[num].grades[course])
     return round(sum_grades / count_grades , 2)
-
 
 class Student:
     def __init__(self, name, surname, gender):
@@ -36,6 +27,24 @@ class Student:
     def __str__(self) :
         output = f'\nИмя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {average_grade(self)}\nКурсы в процессе изучения: {",".join(map(str,self.courses_in_progress))}\nЗавершенные курсы:{",".join(map(str , self.finished_courses))}'
         return output
+    
+    def __lt__ (self , other) :
+        return average_grade(self) < average_grade(other)
+
+    def __gt__ (self , other) :
+        return average_grade(self) > average_grade(other)
+    
+    def __eq__ (self , other) :
+        return average_grade(self) == average_grade(other)
+
+    def __ne__ (self , other) :
+        return average_grade(self) != average_grade(other)
+    
+    def __le__ (self , other) :
+        return average_grade(self) <= average_grade(other)
+
+    def __ge__ (self , other) :
+        return average_grade(self) >= average_grade(other)
     
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached and course in self.courses_in_progress:
@@ -69,6 +78,24 @@ class Reviewer (Mentor):
         output = f'\nИмя: {self.name}\nФамилия: {self.surname}'
         return output
         
+    def __lt__ (self , other) :
+        return average_grade(self) < average_grade(other)
+
+    def __gt__ (self , other) :
+        return average_grade(self) > average_grade(other)
+    
+    def __eq__ (self , other) :
+        return average_grade(self) == average_grade(other)
+
+    def __ne__ (self , other) :
+        return average_grade(self) != average_grade(other)
+    
+    def __le__ (self , other) :
+        return average_grade(self) <= average_grade(other)
+
+    def __ge__ (self , other) :
+        return average_grade(self) >= average_grade(other)
+
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
